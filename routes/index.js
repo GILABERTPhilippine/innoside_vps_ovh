@@ -40,6 +40,15 @@ router.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html')
 })
 
+router.post('/', function(req, res) {
+    res.send(req.body.username);
+    res.send(req.body.email);
+    res.send(req.body.password);
+    res.send(req.body.confPassword);
+    res.sendFile(__dirname + '/index.html')
+    console.log(req.body.username)
+})
+
 router.get('/affiche', function(req, res) {
     res.json(tab);
 
