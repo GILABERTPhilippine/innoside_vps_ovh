@@ -1,10 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require("body-parser");
-
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
 
 // Connection base de données
 var mongoose = require('mongoose');
@@ -14,7 +9,7 @@ mongoose.Promise = global.Promise;
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.collection('fiches').find().toArray(function(err, items) {
+db.collection('fiches').find(function(err, items) {
     tab = items;
 });
 db.once('open', function() {
@@ -45,7 +40,7 @@ router.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html')
 })
 
-app.get('/affiche', function(req, res) {
+router.get('/affiche', function(req, res) {
     res.json(tab);
 
     // router.post('/inscrit', function(req, res) {
@@ -57,5 +52,6 @@ app.get('/affiche', function(req, res) {
     //     };
     //     res.send('Liste des utilisateurs' + '<br>' + 'username :' + '' + username + '<br>' + 'email :' + '' + email)
 })
+
 
 module.exports = router;
