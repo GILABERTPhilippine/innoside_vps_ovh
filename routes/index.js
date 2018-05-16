@@ -1,11 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
+
+//il faut importer path pour l'utiliser
+var path = require('path');
+
 // Connection base de données
 var mongoose = require('mongoose');
 mongoose.connect('mongoDB://localhost/philippine');
 
 mongoose.Promise = global.Promise;
+
+var tab;
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -17,50 +23,42 @@ db.once('open', function() {
 });
 
 
-
-// var collection = db.collection('utilisateur')
-// collection.insert({
-//         username: '',
-//         email: '',
-//         password: '',
-//         conf_password: ''
-//     }, 
-//     function(err, result) {
-//         collection
-//             .find({
-//                 pseudo: ''
-//             })
-//             .toArray(function(err, docs) {
-//                 console.log(docs[0, 1, 2])
-//             })
-//     }),
-
 /* GET home page. */
 router.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html')
+    res.sendFile(path.join(__dirname, '../public/index.html'));
 })
 
-router.post('/', function(req, res) {
-    res.send(req.body.username);
-    res.send(req.body.email);
-    res.send(req.body.password);
-    res.send(req.body.confPassword);
-    res.sendFile(__dirname + '/index.html')
-    console.log(req.body.username)
+router.post('/inscrits', function(req, res) {
+    res.sendFile(path.join(__dirname, '../views/inscrits.html'));
 })
+
+router.post('/subscribe', function(req, res) {
+    // on recup les donne envoyer par le formulaire
+    //on creer un objet newUser
+    var newUser = {
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        confPawword: req.body.confPawword,
+    };
+
+    //si tout est ok ici on l'enregistre dans la db
+    // on verra une autre fois le code
+
+
+    //si l'enregistrement c'est bien passé on renvoie l'acceuil
+    // en faite pour que ca marche il faut utiliser path.join dslé :/ 
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+    // res.json(newUser)
+    console.log(newUser);
+});
+
 
 router.get('/affiche', function(req, res) {
-    res.json(tab);
+    // ici on recupere dans la bdd toute les fiche
+    // et on renvoie les fiche en json par exemple 
+    res.json({});
 
-    // router.post('/inscrit', function(req, res) {
-    //     var data = {
-    //         username: req.body.username,
-    //         email: req.body.email,
-    //         // password : req.body.password,
-    //         // confPassword : req.body.confPassword
-    //     };
-    //     res.send('Liste des utilisateurs' + '<br>' + 'username :' + '' + username + '<br>' + 'email :' + '' + email)
 })
-
 
 module.exports = router;
