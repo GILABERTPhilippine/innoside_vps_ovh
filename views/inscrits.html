@@ -16,23 +16,17 @@
 <body>
     <div class="container">
         <button type="button" id="affiche" class="btn btn-primary">Afficher la liste</button>
-        <div id="liste"></div>
+        <div id="liste" data=""></div>
     </div>
 
     <script>
-        $('#affiche').on('click', function() {
+        $('#affiche').click(function() {
+
             $.ajax({
                 type: 'GET',
                 url: '/affiche',
                 success: function(data) {
-                    $('#liste').html('');
-                    $('#liste').append('<h1>Liste des utilisateurs inscrits/h1>');
-                    for (var i = 0; i < data.length; i++) {
-                        $('#liste').append('<h3>Fiche n° : ' + (i + 1) + '</h3>');
-                        $('#liste').append('<p>Username : ' + data[i].username + '</p>');
-                        $('#liste').append('<p>Email : ' + data[i].email + '</p>');
-                        $('#liste').append('<br>');
-                    }
+                    $('#liste').html(data);
                 }
             })
         });

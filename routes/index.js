@@ -68,9 +68,17 @@ router.post('/subscribe', function(req, res) {
 
 
 router.get('/affiche', function(req, res) {
-    // ici on recupere dans la bdd toute les fiche
-    // et on renvoie les fiche en json par exemple 
-    res.json({});
+    // ici on recupere dans la bdd toute les fiches
+    // et on renvoie les fiches en json par exemple 
+    var promise1 = req.body.username;
+    var promise2 = req.body.email;
+
+    Promise.all([promise1, promise2]).then(function(values) {
+        console.log(values);
+    });
+
+    res.sendFile(path.join(__dirname, '../views/inscrits.html'));
+    // res.json({});
 
 })
 

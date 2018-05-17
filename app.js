@@ -24,6 +24,4 @@ app.use(bodyParser.json({}))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// app.listen(3131);
-
 module.exports = app;
