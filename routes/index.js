@@ -9,7 +9,6 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongoDB://localhost/philippine');
 
-
 // création du schéma
 var userSchema = new mongoose.Schema({
     username: {
@@ -51,35 +50,72 @@ router.post('/subscribe', function(req, res) {
     mydata.confPawword = req.body.conf_password;
 
     mydata.save()
-        // mydata.save(function(err) {
-        //     if (err) {
-        //         res.send(err);
-        //     }
-        //     res.send({
-        //         message: 'Bravo, les données sont maintenant stockée en base de données'
-        //     });
-        // })
 
-    //si l'enregistrement c'est bien passé on renvoie l'acceuil
-    // en faite pour que ca marche il faut utiliser path.join dslé :/ 
     res.sendFile(path.join(__dirname, '../public/index.html'));
     console.log(mydata);
 });
 
-
 router.get('/affiche', function(req, res) {
-    // ici on recupere dans la bdd toute les fiches
-    // et on renvoie les fiches en json par exemple 
+    // ici on recupere dans la bdd toute les fiches et on renvoie les fiches en json
+    // par exemple
+
+
+    // User.find({
+    //     'username': user
+    // }, function(err, user) {
+    //     if (err) {
+    //         onErr(err, callback);
+    //     } else {
+    //         mongoose.connection.close();
+    //         console.log(user);
+    //         callback("", user);
+    //     }
+    // });
+    // ///////////////////////////
+    // var querySQL = "SELECT username, email FROM users";
+    // var data = new Array();
+
+    // var execQuery = User.findOne(querySQL, function(err, rows, fields) {
+
+    //     if (!err) {
+    //         for (var i = 0; i < 25; i++) {
+    //             data.push({
+    //                 "Username": rows[i].username,
+    //                 "Email": rows[i].email
+    //             });
+    //         }
+    //         res.contentType('application/json');
+    //         res.json(data);
+    //         console.log(User.username, User.email)
+    //     } else {
+    //         console.log("[SQL005] - Une erreur est survenue");
+    //     }
+    // });
+    // //////////////////////////////////
     var promise1 = req.body.username;
     var promise2 = req.body.email;
-
     Promise.all([promise1, promise2]).then(function(values) {
         console.log(values);
     });
 
     res.sendFile(path.join(__dirname, '../views/inscrits.html'));
-    // res.json({});
+    res.json({});
 
 })
+
+// router.get('/affiche', function(req, res) {
+//     User.findOne({
+//         username: req.params.username
+//     }, function(error, thread) {
+//         var posts = Post.find({
+//             thread: thread._id
+//         }, function(error, posts) {
+//             res.send([{
+//                 username: username,
+//                 email: email
+//             }]);
+//         });
+//     })
+// });
 
 module.exports = router;
