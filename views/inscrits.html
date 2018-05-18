@@ -21,50 +21,16 @@
 
     <script>
         $(document).ready(function() {
-            $('#affiche').click(function() {
-
-                    $.ajax({
-                            method: "POST",
-                            url: "/affiche",
-                            data: {
-                                username: username,
-                                email: email
-                            }
-
-                        })
-                        .done(function(data) {
-                            console.log(data)
-                        })
-                        // var affiche = $(this).val();
-                        // $.ajax({ // ajax call starts
-                        //         url: '/affichz', // JQuery loads serverside.php
-                        //         data: json.parse('affiche=' + $(this).val()), // Send value of the clicked button
-                        //         dataType: 'json', // Choosing a JSON datatype
-                        //     })
-                        //     .done(function(data) { // Variable data contains the data we get from serverside
-                        //         $('#liste').html('');
-                        //     })
-                })
-                // $.ajax({
-                //         url: '/affiche',
-                //         type: 'POST',
-                //         dataType: 'json',
-                //         data: {
-                //             username: username,
-                //             email: email
-                //         },
-                //         success: function(res) {
-                //             // Access the JSON response //
-                //         }
-                //     })
-                /////////////////////////////
-                // $.ajax({
-                //     type: 'GET',
-                //     url: '/affiche',
-                //     success: function(data) {
-                //         $('#liste').html(data);
-                //     }
-                // })
+            $('#affiche').click(function(e) {
+                $.ajax({
+                        method: "fet",
+                        url: "/affiche",
+                        dataType: 'json'
+                    })
+                    .done(function(reponse) {
+                        console.log('reponse : ' + reponse.username + reponse.email)
+                    })
+            })
         });
     </script>
 
