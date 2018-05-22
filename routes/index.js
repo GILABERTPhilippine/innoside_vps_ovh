@@ -55,17 +55,17 @@ router.post('/subscribe', function(req, res) {
     console.log(mydata);
 });
 
-router.get('/affiche', function(req, res) {
+router.get('/affiche', function(req, res, next) {
+    console.log('coucou')
+    User
+        .find({})
+        .exec(function(err, users) {
+            if (err)
+                console.log(users)
+            res.sendFile(path.join(__dirname, '../views/inscrits.html'));
+            // res.end()
 
-    var promise1 = req.body.username;
-    var promise2 = req.body.email;
-    Promise.all([promise1, promise2]).then(function(values) {
-        console.log(values);
-    });
-
-    res.sendFile(path.join(__dirname, '../views/inscrits.html'));
-    // res.json({});
-
+        })
 })
 
 module.exports = router;
